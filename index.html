@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeamanAgency Profile Database TEST</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #ff9800;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e68900;
+            transform: translateY(-2px);
+        }
+        
+        .search-container {
+            display: none;
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .search-box button {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .form-container {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .photo-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .photo-upload:hover {
+            border-color: #6a11cb;
+            background-color: #f9f9f9;
+        }
+        
+        .photo-upload i {
+            font-size: 40px;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+        
+        .profile-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .profile-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            display: block;
+            border: 3px solid #6a11cb;
+        }
+        
+        .card-details {
+            margin-bottom: 15px;
+        }
+        
+        .card-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .detail-value {
+            color: #333;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-size: 18px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #777;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Agency Profile Database</h1>
+                <div class="btn-group">
+                    <button id="addDataBtn" class="btn-primary">Add Data</button>
+                    <button id="searchBtn" class="btn-secondary">Search</button>
+                </div>
+            </div>
+        </header>
+        
+        <div id="searchContainer" class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Enter name to search...">
+                <button id="searchSubmit">Search</button>
+            </div>
+        </div>
+        
+        <div id="formContainer" class="form-container">
+            <h2 class="form-title">Add New Profile</h2>
+            <form id="profileForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="profilePhoto">Profile Photo</label>
+                        <div class="photo-upload" id="profilePhotoUpload">
+                            <i>📷</i>
+                            <p>Click to upload profile photo</p>
+                            <input type="file" id="profilePhoto" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nrcPhoto">NRC Photo</label>
+                        <div class="photo-upload" id="nrcPhotoUpload">
+                            <i>📄</i>
+                            <p>Click to upload NRC photo</p>
+                            <input type="file" id="nrcPhoto" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="passportPhoto">Passport Photo</label>
+                        <div class="photo-upload" id="passportPhotoUpload">
+                            <i>🛂</i>
+                            <p>Click to upload passport photo</p>
+                            <input type="file" id="passportPhoto" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="birthdate">Birthdate</label>
+                        <input type="date" id="birthdate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sex">Sex</label>
+                        <select id="sex" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Non-binary">Non-binary</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fatherName">Father's Name</label>
+                        <input type="text" id="fatherName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fees">Fees</label>
+                        <input type="number" id="fees" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="feesPercentage">Fees Percentage (%)</label>
+                        <input type="number" id="feesPercentage" min="0" max="100" required>
+                        <div class="progress-bar">
+                            <div class="progress" id="feesProgress"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button type="submit" class="btn-primary">Save Profile</button>
+                    <button type="button" id="cancelBtn" class="btn-secondary" style="margin-left: 10px;">Cancel</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="profileCards" class="profile-cards">
+            <!-- Profile cards will be dynamically added here -->
+            <div class="no-results" id="noResults">
+                No profiles found. Click "Add Data" to create a new profile.
+            </div>
+        </div>
+        
+        <footer>
+            <p>Agency Profile Database System &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script>
+        // Sample data for demonstration
+        let profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+        
+        // DOM elements
+        const addDataBtn = document.getElementById('addDataBtn');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchContainer = document.getElementById('searchContainer');
+        const formContainer = document.getElementById('formContainer');
+        const profileForm = document.getElementById('profileForm');
+        const profileCards = document.getElementById('profileCards');
+        const searchInput = document.getElementById('searchInput');
+        const searchSubmit = document.getElementById('searchSubmit');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const noResults = document.getElementById('noResults');
+        const feesPercentage = document.getElementById('feesPercentage');
+        const feesProgress = document.getElementById('feesProgress');
+        
+        // Event listeners
+        addDataBtn.addEventListener('click', showForm);
+        searchBtn.addEventListener('click', showSearch);
+        profileForm.addEventListener('submit', saveProfile);
+        searchSubmit.addEventListener('click', searchProfiles);
+        cancelBtn.addEventListener('click', hideForm);
+        feesPercentage.addEventListener('input', updateProgressBar);
+        
+        // File upload handlers
+        document.getElementById('profilePhotoUpload').addEventListener('click', () => {
+            document.getElementById('profilePhoto').click();
+        });
+        
+        document.getElementById('nrcPhotoUpload').addEventListener('click', () => {
+            document.getElementById('nrcPhoto').click();
+        });
+        
+        document.getElementById('passportPhotoUpload').addEventListener('click', () => {
+            document.getElementById('passportPhoto').click();
+        });
+        
+        // Functions
+        function showForm() {
+            formContainer.style.display = 'block';
+            searchContainer.style.display = 'none';
+            profileForm.reset();
+            updateProgressBar();
+        }
+        
+        function hideForm() {
+            formContainer.style.display = 'none';
+        }
+        
+        function showSearch() {
+            searchContainer.style.display = 'block';
+            formContainer.style.display = 'none';
+        }
+        
+        function updateProgressBar() {
+            const percentage = feesPercentage.value || 0;
+            feesProgress.style.width = `${percentage}%`;
+        }
+        
+        function saveProfile(e) {
+            e.preventDefault();
+            
+            const profile = {
+                id: Date.now(),
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                birthdate: document.getElementById('birthdate').value,
+                sex: document.getElementById('sex').value,
+                gender: document.getElementById('gender').value,
+                fatherName: document.getElementById('fatherName').value,
+                fees: document.getElementById('fees').value,
+                feesPercentage: document.getElementById('feesPercentage').value,
+                profilePhoto: document.getElementById('profilePhoto').files[0] ? 
+                    URL.createObjectURL(document.getElementById('profilePhoto').files[0]) : 'default-avatar.png',
+                nrcPhoto: document.getElementById('nrcPhoto').files[0] ? 
+                    URL.createObjectURL(document.getElementById('nrcPhoto').files[0]) : 'default-doc.png',
+                passportPhoto: document.getElementById('passportPhoto').files[0] ? 
+                    URL.createObjectURL(document.getElementById('passportPhoto').files[0]) : 'default-doc.png'
+            };
+            
+            profiles.push(profile);
+            localStorage.setItem('profiles', JSON.stringify(profiles));
+            
+            alert('Profile saved successfully!');
+            hideForm();
+            displayProfiles(profiles);
+        }
+        
+        function searchProfiles() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredProfiles = profiles.filter(profile => 
+                profile.name.toLowerCase().includes(searchTerm)
+            );
+            
+            displayProfiles(filteredProfiles);
+        }
+        
+        function displayProfiles(profilesToShow) {
+            profileCards.innerHTML = '';
+            
+            if (profilesToShow.length === 0) {
+                noResults.style.display = 'block';
+                profileCards.appendChild(noResults);
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            profilesToShow.forEach(profile => {
+                const card = document.createElement('div');
+                card.className = 'profile-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3>${profile.name}</h3>
+                    </div>
+                    <div class="card-body">
+                        <img src="${profile.profilePhoto}" alt="Profile Photo" class="card-photo">
+                        <div class="card-details">
+                            <div class="card-detail">
+                                <span class="detail-label">Phone:</span>
+                                <span class="detail-value">${profile.phone}</span>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">Birthdate:</span>
+                                <span class="detail-value">${profile.birthdate}</span>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">Sex:</span>
+                                <span class="detail-value">${profile.sex}</span>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">Gender:</span>
+                                <span class="detail-value">${profile.gender}</span>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">Father's Name:</span>
+                                <span class="detail-value">${profile.fatherName}</span>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">Fees:</span>
+                                <span class="detail-value">$${profile.fees}</span>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">Fees Paid:</span>
+                                <span class="detail-value">${profile.feesPercentage}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: ${profile.feesPercentage}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    alert(`Viewing details for ${profile.name}\n\nPhone: ${profile.phone}\nBirthdate: ${profile.birthdate}\nSex: ${profile.sex}\nGender: ${profile.gender}\nFather's Name: ${profile.fatherName}\nFees: $${profile.fees}\nFees Paid: ${profile.feesPercentage}%`);
+                });
+                
+                profileCards.appendChild(card);
+            });
+        }
+        
+        // Initialize the page
+        updateProgressBar();
+        displayProfiles(profiles);
+    </script>
+</body>
+</html>
