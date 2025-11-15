@@ -25,7 +25,7 @@
         }
         
         header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #1a6aa2 0%, #2c8cba 100%);
             color: white;
             padding: 20px 0;
             border-radius: 10px;
@@ -140,12 +140,17 @@
             color: #555;
         }
         
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
         }
         
         .photo-upload {
@@ -158,13 +163,13 @@
         }
         
         .photo-upload:hover {
-            border-color: #6a11cb;
+            border-color: #1a6aa2;
             background-color: #f9f9f9;
         }
         
         .photo-upload i {
             font-size: 40px;
-            color: #6a11cb;
+            color: #1a6aa2;
             margin-bottom: 10px;
         }
         
@@ -188,7 +193,7 @@
         }
         
         .card-header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #1a6aa2 0%, #2c8cba 100%);
             color: white;
             padding: 15px;
             text-align: center;
@@ -205,7 +210,7 @@
             object-fit: cover;
             margin: 0 auto 15px;
             display: block;
-            border: 3px solid #6a11cb;
+            border: 3px solid #1a6aa2;
         }
         
         .card-details {
@@ -263,7 +268,7 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <h1>SEAMAN Agency Profile Database TEST</h1>
+                <h1>SEAMAN Agency Profile Database</h1>
                 <div class="btn-group">
                     <button id="addDataBtn" class="btn-primary">Add Data</button>
                     <button id="searchBtn" class="btn-secondary">Search</button>
@@ -279,7 +284,7 @@
         </div>
         
         <div id="formContainer" class="form-container">
-            <h2 class="form-title">Add New Profile</h2>
+            <h2 class="form-title">Add New Seaman Profile</h2>
             <form id="profileForm">
                 <div class="form-grid">
                     <div class="form-group">
@@ -315,6 +320,42 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="rank">Rank</label>
+                        <select id="rank" required>
+                            <option value="">Select Rank</option>
+                            <option value="Captain">Captain</option>
+                            <option value="Chief Officer">Chief Officer</option>
+                            <option value="Second Officer">Second Officer</option>
+                            <option value="Third Officer">Third Officer</option>
+                            <option value="Chief Engineer">Chief Engineer</option>
+                            <option value="Second Engineer">Second Engineer</option>
+                            <option value="Third Engineer">Third Engineer</option>
+                            <option value="Deck Cadet">Deck Cadet</option>
+                            <option value="Engine Cadet">Engine Cadet</option>
+                            <option value="Able Seaman">Able Seaman</option>
+                            <option value="Ordinary Seaman">Ordinary Seaman</option>
+                            <option value="Bosun">Bosun</option>
+                            <option value="Cook">Cook</option>
+                            <option value="Steward">Steward</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nrc">NRC Number</label>
+                        <input type="text" id="nrc" placeholder="e.g., 12/ABC(N)123456" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fatherName">Father's Name</label>
+                        <input type="text" id="fatherName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="motherName">Mother's Name</label>
+                        <input type="text" id="motherName" required>
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="phone">Phone Number</label>
                         <input type="tel" id="phone" required>
                     </div>
@@ -325,29 +366,13 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="sex">Sex</label>
-                        <select id="sex" required>
-                            <option value="">Select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <label for="address">Address</label>
+                        <textarea id="address" required></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select id="gender" required>
-                            <option value="">Select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Non-binary">Non-binary</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="fatherName">Father's Name</label>
-                        <input type="text" id="fatherName" required>
+                        <label for="distinguishingMark">Distinguishing Mark</label>
+                        <textarea id="distinguishingMark" placeholder="e.g., Tattoo on left arm, scar on chin, etc."></textarea>
                     </div>
                     
                     <div class="form-group">
@@ -379,7 +404,7 @@
         </div>
         
         <footer>
-            <p>Agency Profile Database System KO C THU X HTOO AUNG &copy; 2025</p>
+            <p>Seaman Agency Profile Database System &copy; 2025</p>
         </footer>
     </div>
 
@@ -450,11 +475,14 @@
             const profile = {
                 id: Date.now(),
                 name: document.getElementById('name').value,
+                rank: document.getElementById('rank').value,
+                nrc: document.getElementById('nrc').value,
+                fatherName: document.getElementById('fatherName').value,
+                motherName: document.getElementById('motherName').value,
                 phone: document.getElementById('phone').value,
                 birthdate: document.getElementById('birthdate').value,
-                sex: document.getElementById('sex').value,
-                gender: document.getElementById('gender').value,
-                fatherName: document.getElementById('fatherName').value,
+                address: document.getElementById('address').value,
+                distinguishingMark: document.getElementById('distinguishingMark').value,
                 fees: document.getElementById('fees').value,
                 feesPercentage: document.getElementById('feesPercentage').value,
                 profilePhoto: document.getElementById('profilePhoto').files[0] ? 
@@ -476,7 +504,9 @@
         function searchProfiles() {
             const searchTerm = searchInput.value.toLowerCase();
             const filteredProfiles = profiles.filter(profile => 
-                profile.name.toLowerCase().includes(searchTerm)
+                profile.name.toLowerCase().includes(searchTerm) ||
+                profile.rank.toLowerCase().includes(searchTerm) ||
+                profile.nrc.toLowerCase().includes(searchTerm)
             );
             
             displayProfiles(filteredProfiles);
@@ -499,10 +529,15 @@
                 card.innerHTML = `
                     <div class="card-header">
                         <h3>${profile.name}</h3>
+                        <p>${profile.rank}</p>
                     </div>
                     <div class="card-body">
                         <img src="${profile.profilePhoto}" alt="Profile Photo" class="card-photo">
                         <div class="card-details">
+                            <div class="card-detail">
+                                <span class="detail-label">NRC:</span>
+                                <span class="detail-value">${profile.nrc}</span>
+                            </div>
                             <div class="card-detail">
                                 <span class="detail-label">Phone:</span>
                                 <span class="detail-value">${profile.phone}</span>
@@ -512,16 +547,12 @@
                                 <span class="detail-value">${profile.birthdate}</span>
                             </div>
                             <div class="card-detail">
-                                <span class="detail-label">Sex:</span>
-                                <span class="detail-value">${profile.sex}</span>
-                            </div>
-                            <div class="card-detail">
-                                <span class="detail-label">Gender:</span>
-                                <span class="detail-value">${profile.gender}</span>
-                            </div>
-                            <div class="card-detail">
-                                <span class="detail-label">Father's Name:</span>
+                                <span class="detail-label">Father:</span>
                                 <span class="detail-value">${profile.fatherName}</span>
+                            </div>
+                            <div class="card-detail">
+                                <span class="detail-label">Mother:</span>
+                                <span class="detail-value">${profile.motherName}</span>
                             </div>
                             <div class="card-detail">
                                 <span class="detail-label">Fees:</span>
@@ -539,7 +570,7 @@
                 `;
                 
                 card.addEventListener('click', () => {
-                    alert(`Viewing details for ${profile.name}\n\nPhone: ${profile.phone}\nBirthdate: ${profile.birthdate}\nSex: ${profile.sex}\nGender: ${profile.gender}\nFather's Name: ${profile.fatherName}\nFees: $${profile.fees}\nFees Paid: ${profile.feesPercentage}%`);
+                    alert(`Viewing details for ${profile.name}\n\nRank: ${profile.rank}\nNRC: ${profile.nrc}\nPhone: ${profile.phone}\nBirthdate: ${profile.birthdate}\nFather: ${profile.fatherName}\nMother: ${profile.motherName}\nAddress: ${profile.address}\nDistinguishing Mark: ${profile.distinguishingMark}\nFees: $${profile.fees}\nFees Paid: ${profile.feesPercentage}%`);
                 });
                 
                 profileCards.appendChild(card);
